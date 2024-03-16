@@ -1,0 +1,52 @@
+server:
+  port: 8888
+  error:
+    whitelabel:
+      enabled: false
+  shutdown: graceful
+  tomcat:
+    connection-timeout: 30000
+
+spring:
+  application:
+    name: message-queue-chat-backend
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/message_queue_chat?autoReconnect=true&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimeZone=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+# 집
+#    username: root
+#    password: "yeonho5376!"
+
+# 기타
+    username: admin
+    password: "yeonho5376!"
+    hikari:
+      maximum-pool-size: 5
+      maxLifeTime: 60000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: true
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+
+logging:
+  level:
+    ROOT: info
+    org:
+      springframework:
+        web: error
+
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-origins: http://localhost:3000,*
