@@ -17,15 +17,11 @@ spring:
       add-mappings: false
 
   datasource:
-    url: jdbc:mysql://localhost:3306/message_queue_chat?autoReconnect=true&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimeZone=false
+    url: jdbc:mysql://host.docker.internal:3307/message_queue_chat?autoReconnect=true&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimeZone=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-# 집
-#    username: root
-#    password: "yeonho5376!"
+    username: root
+    password: "1234"
 
-# 기타
-    username: admin
-    password: "yeonho5376!"
     hikari:
       maximum-pool-size: 5
       maxLifeTime: 60000
@@ -37,8 +33,9 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
+
   kafka:
-    broker: localhost:9092
+    broker: host.docker.internal:9092
 
 logging:
   level:

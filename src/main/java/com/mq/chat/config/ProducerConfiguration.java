@@ -1,10 +1,9 @@
 package com.mq.chat.config;
 
-import com.mq.chat.data.entity.Message;
 import com.mq.chat.data.vo.dto.MessageDto;
-import com.mq.chat.util.KafkaConstants;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -19,6 +18,8 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class ProducerConfiguration {
+    @Value("${spring.kafka.broker}")
+    private String kafkaBroker;
 
     // Kafka ProducerFactory를 생성하는 Bean 메서드
     @Bean
@@ -31,7 +32,7 @@ public class ProducerConfiguration {
     public Map<String, Object> producerConfigurations() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstants.KAFKA_BROKER);
+        map.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBroker);
         map.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         map.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
