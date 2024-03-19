@@ -17,7 +17,7 @@ spring:
       add-mappings: false
 
   datasource:
-    url: jdbc:mysql://host.docker.internal:3307/message_queue_chat?autoReconnect=true&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimeZone=false
+    url: jdbc:mysql://mysql-container:3306/message_queue_chat?autoReconnect=true&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Seoul&cacheDefaultTimeZone=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: "1234"
@@ -35,7 +35,7 @@ spring:
     open-in-view: false
 
   kafka:
-    broker: host.docker.internal:9092
+    broker: mq_chat-kafka-1:9092
 
 logging:
   level:
