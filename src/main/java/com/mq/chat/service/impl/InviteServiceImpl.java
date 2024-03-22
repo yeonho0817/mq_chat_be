@@ -5,6 +5,7 @@ import com.mq.chat.data.entity.ChatRoomMember;
 import com.mq.chat.data.entity.InviteChatRoom;
 import com.mq.chat.data.entity.Member;
 import com.mq.chat.data.repository.*;
+import com.mq.chat.data.vo.ChatInviteAcceptedReqVo;
 import com.mq.chat.data.vo.ChatInviteReqVo;
 import com.mq.chat.data.vo.resVo.InviteChatRoomListResVo;
 import com.mq.chat.error.Error;
@@ -66,15 +67,15 @@ public class InviteServiceImpl implements InviteService {
 
     @Transactional
     @Override
-    public void inviteAccepted(Long id, Long inviteChatRoomId, Boolean accepted) {
+    public void inviteAccepted(Long id, ChatInviteAcceptedReqVo reqVo) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> Error.of(ErrorSpec.NotExistLoginAccount));
-        InviteChatRoom inviteChatRoom = inviteChatRoomQueryRepository.findById(inviteChatRoomId);
+        InviteChatRoom inviteChatRoom = inviteChatRoomQueryRepository.findById(reqVo.getInviteChatRoomId());
         if(ObjectUtils.isEmpty(inviteChatRoom)) throw Error.of(ErrorSpec.NotExistInviteChatRoom);
         if(!member.equals(inviteChatRoom.getInvitedMember())) throw Error.of(ErrorSpec.NotEqualInviteMember);
 
-        inviteChatRoom.setAccepted(accepted);
-        if(accepted) {
+        inviteChatRoom.setAccepted(reqVo.getAccepted());
+        if(reqVo.getAccepted()) {
             chatRoomMemberRepository.save(new ChatRoomMember(inviteChatRoom.getChatRoom(), member, false));
             inviteChatRoom.getChatRoom().setPlusCurrentCount();
         }

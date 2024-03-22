@@ -1,5 +1,6 @@
 package com.mq.chat.controller;
 
+import com.mq.chat.data.vo.ChatInviteAcceptedReqVo;
 import com.mq.chat.data.vo.ChatInviteReqVo;
 import com.mq.chat.data.vo.resVo.InviteChatRoomListResVo;
 import com.mq.chat.response.Response;
@@ -32,13 +33,14 @@ public class InviteController {
         return () -> Response.OK;
     }
 
-    @PostMapping("/accepted/{id}")
+    @PostMapping("/accepted")
     public Callable<Response<Void>> inviteAccepted(
             @RequestHeader(value = "Authorization") Long id,
-            @PathVariable(value = "id") Long inviteChatRoomId,
-            @RequestParam(value = "accepted", defaultValue = "true") Boolean accepted
-    ) {
-        inviteService.inviteAccepted(id, inviteChatRoomId, accepted);
+//            @PathVariable(value = "id") Long inviteChatRoomId,
+//            @RequestParam(value = "accepted", defaultValue = "true") Boolean accepted
+            @RequestBody ChatInviteAcceptedReqVo reqVo
+            ) {
+        inviteService.inviteAccepted(id, reqVo);
         return () -> Response.OK;
     }
 
